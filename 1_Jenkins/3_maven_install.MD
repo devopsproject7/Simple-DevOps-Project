@@ -23,6 +23,9 @@ Maven is a code build tool which used to convert your code to an artifact. this 
    M2_HOME=/opt/maven/apache-maven-3.6.1
    M2=$M2_HOME/bin
    PATH=<Existing_PATH>:$M2_HOME:$M2
+   
+   
+   
    ```
 #### Checkpoint 
 1. logoff and login to check maven version
@@ -34,9 +37,11 @@ So far we have completed the installation of maven software to support maven plu
 
 ### Setup maven on Jenkins console
 1. Install maven plugin without restart  
+: |
   - `Manage Jenkins` > `Jenkins Plugins` > `available` > `Maven Invoker`
   - `Manage Jenkins` > `Jenkins Plugins` > `available` > `Maven Integration`
 
 2. Configure maven path
+: |
   - `Manage Jenkins` > `Global Tool Configuration` > `Maven`
 

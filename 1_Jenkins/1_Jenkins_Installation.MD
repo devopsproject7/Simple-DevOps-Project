@@ -3,13 +3,15 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
 
 
 ### Prerequisites
-1. EC2 Instance 
+:1
+. EC2 Instance 
    - With Internet Access
    - Security Group with Port `8080` open for internet
 1. Java v1.8.x 
 
 ## Install Java
-1. We will be using open java for our demo, Get the latest version from http://openjdk.java.net/install/
+:2
+. We will be using open java for our demo, Get the latest version from http://openjdk.java.net/install/
    ```sh
    yum install java-1.8*
    #yum -y install java-1.8.0-openjdk-devel
@@ -18,12 +20,28 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
 1. Confirm Java Version and set the java home
    ```sh
    java -version
-   find /usr/lib/jvm/java-1.8* | head -n 3
+   
+--->find where JRE path exists
+
+ : | 
+    find /usr/lib/jvm/java-1.8* | head -n 3
+    /usr/lib/jvm/java-1.8.0
+    /usr/lib/jvm/java-1.8.0-openjdk
+    ls /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.272.b10-1.amzn2.0.1.x86_64/jre/
+    ASSEMBLY_EXCEPTION  bin  lib  LICENSE  THIRD_PARTY_README
+
+
+--->   find /usr/lib/jvm/java-1.8* | head -n 3
    JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-<Java version which seen in the above output>
    export JAVA_HOME
    PATH=$PATH:$JAVA_HOME
     # To set it permanently update your .bash_profile
+ 
+: | 
    vi ~/.bash_profile
+   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.272.b10-1.amzn2.0.1.x86_64
+   PATH=$PATH:$HOME/bin:$JAVA_HOME
+
    ```
    _The output should be something like this,_
     ```sh
@@ -56,7 +74,11 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
    By default jenkins runs at port `8080`, You can access jenkins at
    ```sh
    http://YOUR-SERVER-PUBLIC-IP:8080
+   
+   
+   
    ```
+: 3
   #### Configure Jenkins
 - The default Username is `admin`
 - Grab the default password 
@@ -68,6 +90,9 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
   - `Manage Jenkins` > `Global Tool Configuration` > `JDK`  
 - Create another admin user id
 
+
+
+:4
 ### Test Jenkins Jobs
 1. Create “new item”
 1. Enter an item name – `My-First-Project`

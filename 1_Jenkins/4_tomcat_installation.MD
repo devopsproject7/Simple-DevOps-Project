@@ -51,7 +51,7 @@ After that restart tomcat services to effect these changes
    tomcatup
    ```
 1. Update users information in the tomcat-users.xml file
-goto tomcat home directory and Add below users to conf/tomcat-user.xml file
+goto tomcat home directory and Add below users to conf/tomcat-users.xml file
    ```sh
 	<role rolename="manager-gui"/>
 	<role rolename="manager-script"/>
@@ -62,4 +62,42 @@ goto tomcat home directory and Add below users to conf/tomcat-user.xml file
 	<user username="tomcat" password="s3cret" roles="manager-gui"/>
    ```
 1. Restart serivce and try to login to tomcat application from the browser. This time it should be Successful
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2  wget https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz
+    3  tar -xvf apache-tomcat-8.5.61.tar.gz 
+   14  yum install -y java-1.8*
+   17  find . -name context.xml
+   18  vim ./webapps/manager/META-INF/context.xml
+
+            allow=".*" />
+
+
+   28  find . -iname tomcat-users.xml
+   29  vim ./conf/tomcat-users.xml
+   	<role rolename="manager-gui"/>
+	<role rolename="manager-script"/>
+	<role rolename="manager-jmx"/>
+	<role rolename="manager-status"/>
+	<user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status"/>
+	<user username="deployer" password="deployer" roles="manager-script"/>
+	<user username="tomcat" password="s3cret" roles="manager-gui"/>
+    
+    
+   30  /opt/apache-tomcat-8.5.61/bin/shutdown.sh 
+   31  /opt/apache-tomcat-8.5.61/bin/startup.sh 
+
+
 

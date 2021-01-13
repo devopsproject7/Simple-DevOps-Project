@@ -10,11 +10,16 @@ We know how to use work with each and Git, Jenkins independently. What if you wa
 
 
 ### Steps to create "My_First_Maven_Build" Jenkin job
+
+
 1. Login to Jenkins console
-1. Create *Jenkins job*, Fill the following details,
+
+2. Create *Jenkins job*, Fill the following details,
+
    - *Source Code Management:*
       - Repository: `https://github.com/yankils/hello-world.git`
       - Branches to build : `*/master`  
+
    - *Build:*
      - Root POM:`pom.xml`
      - Goals and options: `clean install package`
