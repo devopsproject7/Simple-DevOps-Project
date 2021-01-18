@@ -30,14 +30,23 @@ Ansible is an open-source automation platform. It is very, very simple to set up
    echo "ansadmin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
    ```
    
-1. Log in as a ansadmin user on master and generate ssh key (on Control node)
-   ```sh 
-   sudo su - ansadmin
-   ssh-keygen
+
    ```
 1. Copy keys onto all ansible managed hosts (on Control node)
    ```sh 
    ssh-copy-id ansadmin@<target-server>
+   
+    On target-server, useradd ansadmin
+                      passwd ansadmin
+                      usermod -aG docker ansadmin
+                      
+                      
+1. Log in as a ansadmin user on master and generate ssh key (on Control node)
+   ```sh 
+   sudo su - ansadmin
+   ssh-keygen
+    Password_athentication----Yes
+
    ```
 
 1. Ansible server used to create images and store on docker registry. Hence install docker, start docker services and add ansadmin to the docker group. 
@@ -60,4 +69,18 @@ Ansible is an open-source automation platform. It is very, very simple to set up
 1. Run ansible command as ansadmin user it should be successful (Master)
    ```sh 
    ansible all -m ping
+   
+   
+   
+   
+[localhost]
+localhost
+
+[docker]
+172.31.42.214
+
+
+   ansible -i /home/ansadmin/hosts all   -m ping
+
+
    ```

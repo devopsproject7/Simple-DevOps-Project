@@ -2,6 +2,20 @@
 Jenkins is a self-contained Java-based program, ready to run out-of-the-box, with packages for Windows, Mac OS X and other Unix-like operating systems. As an extensible automation server, Jenkins can be used as a simple CI server or turned into the continuous delivery hub for any project.
 
 
+   6  amazon-linux-extras list | grep -i java
+   10  amazon-linux-extras  install java-openjdk11
+   11  sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   12  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+   13  sudo yum upgrade
+   15  sudo yum install jenkins java-1.8.0-openjdk-devel
+   16  sudo systemctl daemon-reload
+   17  systemctl status jenkins
+   18  systemctl restart  jenkins
+   21  cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+
 ### Prerequisites
 :1
 . EC2 Instance 
@@ -13,6 +27,7 @@ Jenkins is a self-contained Java-based program, ready to run out-of-the-box, wit
 :2
 . We will be using open java for our demo, Get the latest version from http://openjdk.java.net/install/
    ```sh
+   yum remove -y java-1.7.0*
    yum install java-1.8*
    #yum -y install java-1.8.0-openjdk-devel
    ```
