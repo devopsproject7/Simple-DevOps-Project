@@ -1,0 +1,3 @@
+ ssh -i "key.pem" ec2-user@ec2-54-234-128-142.compute-1.amazonaws.com
+ 
+ scp  -r -i "key.pem" ec2-user@ec2-3-236-236-34.compute-1.amazonaws.com:/var/lib/jenkins/backup .
