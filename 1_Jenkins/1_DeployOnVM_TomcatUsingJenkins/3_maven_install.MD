@@ -2,6 +2,21 @@
 Maven is a code build tool which used to convert your code to an artifact. this is a widely used plugin to build in continuous integration
 
 
+60  cd /opt
+   62  wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip
+   64  unzip apache-maven-3.6.3-bin.zip 
+   66  rm -rf apache-maven-3.6.3-bin.zip
+   67  mv apache-maven-3.6.3 maven
+
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.272.b10-1.amzn2.0.1.aarch64
+M2_HOME=/opt/maven
+M2=/opt/maven/bin
+PATH=$PATH:$HOME/bin:$JAVA_HOME:$M2:$M2_HOME
+
+export PATH
+
+
+
 #### Prerequisites
 1. Jenkins server
 

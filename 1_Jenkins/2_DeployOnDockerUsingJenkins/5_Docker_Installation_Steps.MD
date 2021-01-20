@@ -3,6 +3,15 @@
 ### Pre-requisites
 1. Amazon Linux EC2 Instance
 
+
+  1  yum install -y docker
+    4   systemctl start docker
+    6     docker --version 
+    7  docker run -it --rm tomcat:8.0
+    8  docker run -it --name=tomcat-container -p 8080:8080 tomcat:8.0
+
+
+
 ## Installation Steps
 
 1. Install docker and start docker services
@@ -34,6 +43,39 @@
    ```sh
    docker run -d --name test-tomcat-server -p 8080:8080 tomcat:latest
    ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

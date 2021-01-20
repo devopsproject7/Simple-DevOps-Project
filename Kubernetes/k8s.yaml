@@ -1,0 +1,40 @@
+cat id_rsa.pub  ---> copy authorized_keys
+
+
+pwd
+/opt/kubernetes
+
+ ls
+hosts  kubernetes-valaxy-deployment.yml  kubernetes-valaxy-service.yml
+
+[ansadmin@ansible kubernetes]$ cat hosts  kubernetes-valaxy-deployment.yml  kubernetes-valaxy-service.yml
+[localhost]
+localhost
+
+[k8s]
+172.31.19.225
+---
+- name: Create pods using deployment 
+  hosts: kubernetes 
+  # become: true
+  user: root 
+ 
+  tasks: 
+  - name: create a deployment
+    command: kubectl apply -f valaxy-deploy.yml
+ 
+  - name: update deployment with new pods if image updated in docker hub
+    command: kubectl rollout restart deployment.v1.apps/valaxy-deployment
+
+---
+- name: create service for deployment
+  hosts: kubernetes
+  # become: true
+  user: root 
+
+  tasks:
+  - name: create a service
+    command: kubectl apply -f valaxy-service.yml
+
+
+

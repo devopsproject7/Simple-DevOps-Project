@@ -79,7 +79,7 @@ goto tomcat home directory and Add below users to conf/tomcat-users.xml file
 2  wget https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz
     3  tar -xvf apache-tomcat-8.5.61.tar.gz 
    14  yum install -y java-1.8*
-   17  find . -name context.xml
+   17  find . -name context.xml            ----> ##MANAGER
    18  vim ./webapps/manager/META-INF/context.xml
 
             allow=".*" />
@@ -98,6 +98,7 @@ goto tomcat home directory and Add below users to conf/tomcat-users.xml file
     
    30  /opt/apache-tomcat-8.5.61/bin/shutdown.sh 
    31  /opt/apache-tomcat-8.5.61/bin/startup.sh 
+cat   /opt/tomcat/logs/catalina.2021-01-18.log
 
 
 

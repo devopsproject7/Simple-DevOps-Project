@@ -1,0 +1,233 @@
+[ansadmin@ip-172-31-92-7 kubernetes]$ ls
+container.yaml  hosts       kubernetes-valaxy-deployment.yml  simple-devops-project_2.yaml  valaxy-deploy.yml
+Dockerfile      image.yaml  kubernetes-valaxy-service.yml     simple-devops-project.yaml    valaxy-service.yml
+[ansadmin@ip-172-31-92-7 kubernetes]$ pwd
+/opt/kubernetes
+
+
+[ansadmin@ip-172-31-92-7 kubernetes]$ cat *
+- hosts: all
+  become: true 
+  tasks:
+  - name: Stop current running container
+    command: docker container stop simple-devops-container
+    ignore_errors: yes
+    
+  - name: Remove stopped  Docker container
+    command: docker rm simple-devops-container
+    ignore_errors: yes
+
+  - name: Remove Docker image
+    command: docker rmi devopsharish/simple-devops-image:latest
+    ignore_errors: yes
+
+ # - name: building docker image
+ #  command: "docker build -t simple-devops-image ." 
+ #  args:
+ #   chdir: /opt/docker
+   
+  - name: Pull Docker image from dockerhub
+    command: docker pull devopsharish/simple-devops-image:latest
+     
+
+  - name: Create container using devops image
+    command: docker run -d --name simple-devops-container -p 8080:8080 devopsharish/simple-devops-image:latest
+   # Pull tomcat latest image from dockerhub 
+   From tomcat:8.0
+   # Maintainer
+   MAINTAINER "AR Shankar" 
+
+   # copy war file on to container 
+   COPY ./webapp.war /usr/local/tomcat/webapps
+
+[ansible-server]
+localhost
+
+[kubernetes]
+172.31.19.225
+---
+- hosts: ansible-server
+  become: true
+
+  tasks:
+  - name: create docker image using war file
+    command: docker build -t simple-devops-image:latest .
+    args:
+      chdir: /opt/kubernetes
+
+  - name: create tag to image
+    command: docker tag simple-devops-image devopsharish/simple-devops-image
+
+  - name: Docker login
+    command: docker login -u="devopsharish" -p="1harish"
+
+  - name: push image on to dockerhub
+    command: docker push devopsharish/simple-devops-image
+
+  - name: remove docker images form ansible server
+    command: docker rmi simple-devops-image:latest devopsharish/simple-devops-image
+    ignore_errors: yes
+
+---
+- name: Create pods using deployment 
+  hosts: kubernetes 
+  # become: true
+  user: ec2-user 
+ 
+  tasks: 
+  - name: create a deployment
+    command: kubectl apply -f valaxy-deploy.yml
+ 
+  - name: update deployment with new pods if image updated in docker hub
+    command: kubectl rollout restart deployment.v1.apps/valaxy-deployment
+
+---
+- name: create service for deployment
+  hosts: kubernetes
+  # become: true
+  user: ec2-user 
+
+  tasks:
+  - name: create a service
+    command: kubectl apply -f valaxy-service.yml
+
+
+---
+- hosts: all
+  become: true 
+  tasks:
+  - name: Stop current running container
+    command: docker container stop simple-devops-container
+    ignore_errors: yes
+    
+  - name: Remove stopped  Docker container
+    command: docker rm simple-devops-container
+    ignore_errors: yes
+
+  - name: Remove Docker image
+    command: docker rmi simple-devops-image
+    ignore_errors: yes
+
+
+  - name: building docker image
+    command: "docker build -t simple-devops-image ." 
+    args:
+     chdir: /opt/docker
+
+  - name: Create container using devops image
+    command: docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image
+---
+- hosts: all
+  become: true 
+  tasks:
+  - name: building docker image
+    command: "docker build -t simple-devops-image ." 
+    args:
+     chdir: /opt/docker
+
+  - name: Create container using devops image
+    command: docker run -d --name simple-devops-container -p 8080:8080 simple-devops-image
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: valaxy-deployment
+spec:
+  selector:
+    matchLabels:
+      app: valaxy-devops-project
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: valaxy-devops-project
+    spec:
+      containers:
+      - name: valaxy-devops-project
+        image: devopsharish/simple-devops-image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: valaxy-service
+  labels:
+    app: valaxy-devops-project
+spec:
+  selector:
+    app: valaxy-devops-project
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 31200
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+ ###########################################################     
+ [ec2-user@ip-172-31-19-225 ~]$ ls
+valaxy-deploy.yml  valaxy-service.yml
+[ec2-user@ip-172-31-19-225 ~]$ cat *
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: valaxy-deployment
+spec:
+  selector:
+    matchLabels:
+      app: valaxy-devops-project
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+
+  template:
+    metadata:
+      labels:
+        app: valaxy-devops-project
+    spec:
+      containers:
+      - name: valaxy-devops-project
+        image: devopsharish/simple-devops-image
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: valaxy-service
+  labels:
+    app: valaxy-devops-project
+spec:
+  selector:
+    app: valaxy-devops-project
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 31200
+     
+      
+      
+      
+      
+      
+      
