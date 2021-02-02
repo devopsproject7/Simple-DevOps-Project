@@ -1,3 +1,7 @@
+alias a="docker ps;docker images;ls -l;date"
+
+
+
 # Deploy on a docker container using Ansible
 # *Jenkins Job name:* `Deploy_on_Container_using_ansible`
 
@@ -8,6 +12,7 @@
 1. Ansible server
 1. `Dockerfile` under *`/opt/docker`* on Ansible server **[Get Help Here]()**
    ```sh 
+---->   
    # Pull tomcat latest image from dockerhub 
    From tomcat
    # Maintainer

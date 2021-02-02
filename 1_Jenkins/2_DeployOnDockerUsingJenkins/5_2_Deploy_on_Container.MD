@@ -16,14 +16,17 @@
 
    # copy war file on to container 
    COPY ./webapp.war /usr/local/tomcat/webapps
+   
+   
 ### Integration between Docker-host and Jenkins
 
-    3  vim Dockerfile
-    9  docker build -t devops-project .
-   10  docker images
-   11  docker run --name devops-container  -p 8080:8080 devops-project
+   vim Dockerfile
+   docker build -t devops-project .
+ docker images
+  docker run --name devops-container  -p 8080:8080 devops-project
 
 
+cd /opt/dockeradmin; docker build -t devops-project  . ; docker run  -d --name devops-container  -p 8080:8080 devops-project; docker ps -a
 
 
 

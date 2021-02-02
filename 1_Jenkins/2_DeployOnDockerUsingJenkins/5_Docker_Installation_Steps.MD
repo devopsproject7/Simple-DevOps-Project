@@ -4,11 +4,11 @@
 1. Amazon Linux EC2 Instance
 
 
-  1  yum install -y docker
-    4   systemctl start docker
-    6     docker --version 
-    7  docker run -it --rm tomcat:8.0
-    8  docker run -it --name=tomcat-container -p 8080:8080 tomcat:8.0
+ yum install -y docker
+ systemctl start docker
+   docker --version 
+ docker run -it --rm tomcat:8.0
+  docker run -it --name=tomcat-container -p 8080:8080 tomcat:8.0
 
 
 
@@ -33,9 +33,12 @@
    usermod -aG docker dockeradmin
    
  : |
-    /etc/ssh/sshd_config Password authentication: yes   systemstl reload sshd
+    /etc/ssh/sshd_config Password authentication: yes   systemctl reload sshd
+    
     plugin:publish over ssh
+    
     configure system---> docker ip,user,password
+    
 
    ```
 ### Validation test

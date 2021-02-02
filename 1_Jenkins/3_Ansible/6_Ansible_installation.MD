@@ -20,7 +20,7 @@ Ansible is an open-source automation platform. It is very, very simple to set up
    ansible --version
    ```
    
-1. Create a user called ansadmin (on Control node and Managed host)  
+1. Create a user called ansadmin   #######ON ANSSIBLE AND DOCKER server(on Control node and Managed host)  
    ```sh
    useradd ansadmin
    passwd ansadmin

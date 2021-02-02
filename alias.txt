@@ -2,4 +2,4 @@ alias k=kubectl
 alias ka="kubectl apply -f"
 alias kg="kubectl get"
 alias kd="kubectl describe"
-alias kdep="kubectl get deploy,rs,po"
+alias kdep="kubectl get deploy,rs,po,svc"

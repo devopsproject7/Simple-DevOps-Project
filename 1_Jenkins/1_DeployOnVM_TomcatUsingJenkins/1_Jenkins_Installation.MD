@@ -1,18 +1,39 @@
 # Install Jenkins on AWS EC2
 Jenkins is a self-contained Java-based program, ready to run out-of-the-box, with packages for Windows, Mac OS X and other Unix-like operating systems. As an extensible automation server, Jenkins can be used as a simple CI server or turned into the continuous delivery hub for any project.
 
+  yum remove -y java*
+    7  yum install -y java-1.8*
+    8  java -version
+   10   find /usr/lib/jvm/java-1.8* | head -n 3
+   11  ls /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.272.b10-1.amzn2.0.1.aarch64
+ 
+   13  vim ~/.bash_profile
+   14  echo $JAVA_HOME
+   # User specific environment and startup programs
+        JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.272.b10-1.amzn2.0.1.aarch64
+        PATH=$PATH:$HOME/bin:$JAVA_HOME
+
+        export PATH
+
 
    6  amazon-linux-extras list | grep -i java
    10  amazon-linux-extras  install java-openjdk11
-   11  sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
-   12  sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
-   13  sudo yum upgrade
-   15  sudo yum install jenkins java-1.8.0-openjdk-devel
-   16  sudo systemctl daemon-reload
-   17  systemctl status jenkins
-   18  systemctl restart  jenkins
-   21  cat /var/lib/jenkins/secrets/initialAdminPassword
+   
+   
+  sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+  sudo yum upgrade
+  sudo yum install -y jenkins                            
+  #java-1.8.0-openjdk-devel
+    sudo systemctl daemon-reload
+ systemctl status jenkins
+  systemctl restart  jenkins
+ cat /var/lib/jenkins/secrets/initialAdminPassword
 
+
+
+Change admin password
+JAVA PATH
 
 
 
